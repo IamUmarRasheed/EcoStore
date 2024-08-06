@@ -1,13 +1,45 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import reportWebVitals from "./reportWebVitals";
+import { SidebarProvider } from "./components/context/sidebarContext";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+import {
+  createBrowserRouter,
+  createRoutesFromElements,
+  RouterProvider,
+  Route,
+} from "react-router-dom";
+
+import Product from "./components/Product";
+import Layout from "./components/Layout";
+import Provider from "./services/Provider";
+
+import Productdetail from "./components/Productdetail";
+
+import Cart from "./components/cart";
+import CategoryProduct from "./components/Catogoryproduct";
+
+const router = createBrowserRouter(
+  createRoutesFromElements([
+    <Route path="/" element={<Layout />}>
+      <Route path="/productdetail/:id" element={<Productdetail />} />
+      <Route path="" element={<Product />} />
+      <Route path="/cart" element={<Cart />} />
+      <Route path="/category/:categorySlug" element={<CategoryProduct/>} />
+      {/* <Route path="*" element={<NotFound />} /> */}
+    </Route>,
+  ])
+);
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <App />
+    <Provider>
+      <SidebarProvider>
+        <RouterProvider router={router} />
+      </SidebarProvider>
+    </Provider>
   </React.StrictMode>
 );
 
